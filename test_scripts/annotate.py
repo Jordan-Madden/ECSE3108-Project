@@ -10,17 +10,15 @@ def main():
     # If cleanup is True then the new images and annotations will be appended to previous ones
     cleanup = True
 
-    #Setup the window 
+    #Setup the window and initialize webcam
     cv2.namedWindow('frame', cv2.WINDOW_NORMAL)
     cv2.resizeWindow('frame', 1920,1080)
     cv2.moveWindow("frame", 0,0)
-
-    # Initialize webcam
     cap = cv2.VideoCapture(0,cv2.CAP_DSHOW)
 
     # Initalize sliding window's x1,y1 
     x1 ,y1 = 0,0
-    window_width = 190 
+    window_width = 190
     window_height = 190
 
     # We will save images after every 4 frames to prevent duplicates
