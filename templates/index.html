@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel= "stylesheet" href= "{{  url_for('static', filename='css/style.css')  }}">
+    <title>Document</title>
+</head>
+<body>
+    <div class="nav">
+        <h1>Jordan Madden</h1>
+        <h1>Gesture Recognizer</h1>
+    </div>
+    <img src="{{ url_for('video_feed') }}" width="500px" height="500px">
+    <div class="footer">
+        <p>Faculty of Engineering, UWI Mona</p>
+        <p>ECSE3108 - Data Communications and Computer Networks</p>
+    </div>
+</body>
+</html>
