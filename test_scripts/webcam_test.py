@@ -7,14 +7,11 @@ def main():
     file_name = 'Hand_Detector.svm' 
     detector = dlib.simple_object_detector(file_name)
 
-    # Set the window name
+    # Set the window name and initialize webcam
     cv2.namedWindow('frame', cv2.WINDOW_NORMAL)
-
-    # Initialize webcam
     cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
 
-    # Setting the downscaling size, for faster detection
-    # If you're not getting any detections then you can set this to 1
+    # Downscale for faster detection
     scale_factor = 2.0
 
     # Initially the size of the hand and its center x point will be 0
@@ -30,7 +27,6 @@ def main():
         
         # Read frame by frame
         ret, frame = cap.read()
-        
         if not ret:
             break
         
