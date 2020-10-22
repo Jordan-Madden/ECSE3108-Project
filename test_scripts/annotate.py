@@ -14,7 +14,7 @@ def main():
     cv2.namedWindow('frame', cv2.WINDOW_NORMAL)
     cv2.resizeWindow('frame', 1920,1080)
     cv2.moveWindow("frame", 0,0)
-    cap = cv2.VideoCapture(0,cv2.CAP_DSHOW)
+    cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
 
     # Initalize sliding window's x1,y1 
     x1 ,y1 = 0,0
