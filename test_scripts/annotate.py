@@ -7,25 +7,22 @@ import numpy as np
 import shutil
 
 def main():
-    # If cleanup is True then the new images and annotations will be appended to previous ones
+    #If cleanup is True then the new images and annotations will be appended to previous ones
     cleanup = True
 
-    #Setup the window and initialize webcam
     cv2.namedWindow('frame', cv2.WINDOW_NORMAL)
     cv2.resizeWindow('frame', 1920,1080)
     cv2.moveWindow("frame", 0,0)
     cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
-
-    # Initalize sliding window's x1,y1 
     x1 ,y1 = 0,0
     window_width = 190
     window_height = 190
 
-    # We will save images after every 4 frames to prevent duplicates
+    #Save images after every 4 frames to prevent duplicates
     skip_frames = 4
     frame_gap = 0
 
-    # Store images in rgis directory
+    # Store images here
     directory = 'train_images_h'
     box_file = 'boxes_h.txt'
 
@@ -35,7 +32,6 @@ def main():
         if os.path.exists(directory):
             shutil.rmtree(directory)
         
-        # Clear up all previous bounding boxes
         open(box_file, 'w').close()
         
         # Initialize the counter to 0
@@ -49,19 +45,13 @@ def main():
         # Set the counter to the previous highest checkpoint
         counter = int(box_content.split(':')[-2].split(',')[-1])
 
-    # Open up this text file or create it if it does not exists
     fr = open(box_file, 'a')
-
-    # Create our image directory if it does not exists.
     if not os.path.exists(directory):
         os.mkdir(directory)
 
-    # Initial wait before you start recording each row
     initial_wait = 0
             
     while(True):
-        
-        # Start reading from camera
         ret, frame = cap.read()
         if not ret:
             break
@@ -84,13 +74,12 @@ def main():
                 
             elif y1 + window_height + 270 < frame.shape[1]:
 
-                # If the sliding_window has reached the end of the row then move down
+                #Move window down by 80px
                 y1 += 80    
                 x1 = 0
                 frame_gap = 0
                 initial_wait = 0
                 
-            # Break the loop if we have gone over the whole screen.
             else:
                 break
                 
@@ -107,13 +96,10 @@ def main():
             img_full_name = directory + '/' + str(counter) +  '.png'
             cv2.imwrite(img_full_name, orig)
             
-            # Save the bounding box coordinates in the text file.
+            # Save bounding box coordinates
             fr.write('{}:({},{},{},{}),'.format(counter, x1, y1, x1+window_width, y1+window_height))
 
-            # Increment the counter 
             counter += 1
-
-            # Set the frame_gap back to 0.
             frame_gap = 0
 
         # Draw the sliding window
@@ -124,7 +110,6 @@ def main():
         if cv2.waitKey(1) == ord('q'):
                     break
 
-    # Release camera and close the file and window
     cap.release()
     cv2.destroyAllWindows()
     fr.close()
